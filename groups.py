@@ -1,4 +1,4 @@
-class Group:
+class create_Group:
     def __init__(self, elements, operation):
         # By definition of a group, we require an identity, an inverse, and group associativity
         self.elements = set(elements)
@@ -43,6 +43,25 @@ class Group:
         print(f"Identity: {self.identity}")
         print(f"Inverses: {self.inverses}")
 
-def create_Group(elements, operation):
-    return Group(elements, operation)
+        
+
+def group(elements, operation):
+    return create_Group(elements, operation)
+
+#returning/manipulating group elements/other utilities
+def order(group): # returns group order
+    return len(group.elements)
+
+def optn(group): # returns groups operation
+    return group.operation
+
+def identity(group):# returns identity element
+    return group.identity
+
+def inverse(group): # returns array of group elements with their corresponding inverses
+    return group.inverses
+
+new_set = set([0, 1])
+operation = lambda a, b: (a + b) % 2
+mod2 = group(new_set, operation)
 
