@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+name = "RepMat"
+version = "0.1.0"
+description = "Representation theory of finite groups in Python."
+author = "George Elliott"
+author_email = "georgeelliott.ge@proton.me"
+license = "MIT"
+long_description = "README.md"
+long_description_content_type = "text/markdown"
+url = "https://github.com/george-elliott-git/RepMat"
+project_urls = { "Documentation" = "https://yourdocs.com" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.entry_points]
+console_scripts = ["your-cli = RepMat.module:main_function"]

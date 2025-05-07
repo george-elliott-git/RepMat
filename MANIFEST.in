@@ -1,0 +1,23 @@
+# Include documentation files
+include README.md
+include LICENSE
+
+# Include all files in the 'docs/' directory
+graft docs
+
+# Include all files in the 'data/' directory
+recursive-include data *
+
+# Include all .txt files
+include *.txt
+
+# Exclude Python bytecode files
+exclude *.pyc
+exclude *.pyo
+
+# Exclude __pycache__ directories
+prune __pycache__
+
+# Exclude any files in the 'tests/' directory
+recursive-exclude tests *.pyc
+
