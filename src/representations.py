@@ -2,7 +2,7 @@ import numpy as np
 import sys
 sys.path.append(r'D:\RepMatProject')
 from .vspaces import dim
-from .groups import GroupElements
+from .groups import GroupElements, create_Cyclic, create_Perm
 
 
 # representation.py
@@ -78,7 +78,19 @@ class Decomposition:
 #CREATION
 
 def Rep(group, matrices, vspace):
-    return create_Rep(group, matrices, vspace)
+    if isinstance(group, create_Cyclic):
+        rep_matrices = []
+        for k in range(n):
+            angle = 2 * np.pi * k / n
+            matrix = np.array([
+                [np.cos(angle), -np.sin(angle)],
+                [np.sin(angle),  np.cos(angle)]
+            ])
+        rep_matrices.append(matrix)
+        return create_Rep(group, rep_matrices, R(1))
+
+    else:
+        return create_Rep(group, matrices, vspace)
 
 # DISPLAY & RECALL
 
