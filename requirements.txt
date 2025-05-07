@@ -1,0 +1,22 @@
+my_library/
+├── src/
+│   └── my_library/
+│       ├── __init__.py
+│       ├── module1.py
+│       ├── module2.py
+│       └── utils.py
+├── tests/
+│   ├── __init__.py
+│   ├── test_module1.py
+│   ├── test_module2.py
+│   └── test_utils.py
+├── docs/
+│   ├── index.rst
+│   └── usage.md
+├── .gitignore
+├── LICENSE
+├── MANIFEST.in
+├── pyproject.toml
+├── README.md
+├── requirements.txt
+└── setup.py
