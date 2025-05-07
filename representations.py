@@ -1,28 +1,67 @@
+import numpy as np
+import sys
+sys.path.append(r'D:\RepMatProject')
+from .vspaces import dim
+from .groups import GroupElements
+
+
 # representation.py
 
-import numpy as np
+# allows the user to create representations for standard or custom groups
 
-class GroupRepresentation:
-    def __init__(self, group, dimension):
+#checks whether custom matrices fit the definition of a representation on the group
+
+class create_Rep:
+    def __init__(self, group, matrices, vspace):
         self.group = group
-        self.dimension = dimension
-        self.representation = {}
+        self.elements = GroupElements(group)
+        self.vspace = vspace
+        self.matrices = matrices
+        self.reps = {}
+        self.em_dictionary = zip(self.elements, self.matrices)
+        self.display_list = list(zip(self.elements, self.matrices))
 
-    def add_representation(self, element, matrix):
-        if element not in self.group.elements:
-            raise ValueError(f"Element {element} is not part of the group")
-        self.representation[element] = matrix
+        if len(self.matrices) != len(self.elements):
+            raise ValueError("Number of matrices must match number of group elements.")
 
-    def get_representation(self, element):
-        """Get the matrix representation of a group element."""
-        return self.representation.get(element, None)
+        
+        for element, matrix in self.em_dictionary:
+                if matrix.shape != (vspace.dim(), vspace.dim()):
+                    raise ValueError(f"Matrix for '{element}' must be of shape ({vspace.dim()}, {vspace.dim()})")
+                self.reps[element] = matrix
+
+
+    #DISPLAY & RECALL FUNCTIONS
+
+    def display_rep_info(self):
+            print(f"Representation has dict: {self.display_list}") #include more/neaten up
+
+    def get_Rep(self, element):
+            #Get the matrix representation of a group element.
+            return self.reps.get(element, None)
+
+        
+    
+    # verifying custom choices fit the formal definition of a representation
 
     def check_homomorphism(self):
-        """Check if the representation satisfies the homomorphism property."""
-        for g1 in self.group.elements:
-            for g2 in self.group.elements:
-                lhs = np.dot(self.representation[g1], self.representation[g2])
-                rhs = self.representation[self.group.operation(g1, g2)]
-                if not np.allclose(lhs, rhs):
-                    return False
-        return True
+            for g1 in self.group.elements:
+                for g2 in self.group.elements:
+                    lhs = np.dot(self.reps[g1], self.reps[g2])
+                    rhs = self.reps[self.group.operation(g1, g2)]
+                    if not np.allclose(lhs, rhs):
+                        return False
+            return True
+
+
+# Here we define the utility functions that come with representations.py
+
+#CREATION
+
+def Rep(group, matrices, vspace):
+    return create_Rep(group, matrices, vspace)
+
+# DISPLAY & RECALL
+
+def DisplayR(rep):
+    return display_rep_info(rep)

@@ -1,5 +1,16 @@
 #RepMat/__init__.py
-from .groups import create_Group
-from .representations import GroupRepresentation
+from .vspaces import FiniteField, VctSp, Reals
+from .groups import Group, Cyclic, DisplayG, Order, create_Group
+from .representations import Rep, DisplayR, create_Rep
+import numpy as np #doesnt import?
+import sympy
 
-__all__ = ['create_group', 'GroupRepresentation']
+__all__ = ['FiniteField', 'VectorSpace', 'Group', 'Cyclic', 'Display', 'Order', 'Rep']
+
+def Display(item):
+    if isinstance(item, create_Group):
+        return item.display_group_info()
+    if isinstance(item, create_Rep):
+        return item.display_rep_info()
+    else:
+        pass

@@ -1,3 +1,7 @@
+#groups.py
+
+# allows the user to create custom or 'standard' groups
+
 class create_Group:
     def __init__(self, elements, operation):
         # By definition of a group, we require an identity, an inverse, and group associativity
@@ -37,31 +41,77 @@ class create_Group:
     def group_check(self):
         return bool(self.identity) and len(self.inverses) == len(self.elements)
 
+    # DISPLAY FUNCTION
+
     def display_group_info(self):
         print(f"Group with elements: {self.elements}")
         print(f"Group operation: {self.operation}")
         print(f"Identity: {self.identity}")
         print(f"Inverses: {self.inverses}")
 
-        
 
-def group(elements, operation):
+
+#standard groups
+#cyclic, symmetric, alternating, dihedral, modulo n, klein-four, quaternion
+
+
+class create_Cyclic:
+    def __init__(self, elements):
+        self.elements = set(elements)
+
+
+    def operation(self, a, b):
+        return (a + b) % len(self.elements)
+
+    def __call__(self, value):
+        return value % len(self.elements)
+
+    def __str__(self):
+        return f"C{len(self.elements)}"
+
+
+class create_Perm:
+    def __init__(self, no_of_elements):
+        self.no_of_elements = no_of_elements
+    
+
+def Perm(no_of_element):
+    if no_of_elements.is_digit() and no_of_elements > 0:
+        return create_Perm_Group(no_of_element)
+    else:
+        print("Not a valid number of elements!")
+
+
+# Here we define the utility functions that come with groups.py
+
+
+# CREATION
+
+def Group(elements, operation):
     return create_Group(elements, operation)
 
-#returning/manipulating group elements/other utilities
-def order(group): # returns group order
+def Cyclic(elements):
+    return create_Cyclic(elements)
+
+# DISPLAY & RECALL
+
+def DisplayG(group):
+    return display_group_info(group)
+    
+
+def GroupElements(group):
+    return group.elements
+
+def Order(group): # returns group order
     return len(group.elements)
 
-def optn(group): # returns groups operation
+def Optn(group): # returns groups operation
     return group.operation
 
-def identity(group):# returns identity element
+def Identity(group):# returns identity element
     return group.identity
 
-def inverse(group): # returns array of group elements with their corresponding inverses
+def Inverse(group): # returns array of group elements with their corresponding inverses
     return group.inverses
 
-new_set = set([0, 1])
-operation = lambda a, b: (a + b) % 2
-mod2 = group(new_set, operation)
 
