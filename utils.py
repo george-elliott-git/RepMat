@@ -1,3 +1,6 @@
 # utils
 
-# is_reducible(), orb(), stab(), action(), tensor products, etc
+# orb(), stab(), action(), tensor products, etc,
+
+
+

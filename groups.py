@@ -98,8 +98,7 @@ def Cyclic(elements):
 def DisplayG(group):
     return display_group_info(group)
     
-
-def GroupElements(group):
+def GroupElements(group, i): #returns array (or ith) group element
     return group.elements
 
 def Order(group): # returns group order
@@ -111,7 +110,6 @@ def Optn(group): # returns groups operation
 def Identity(group):# returns identity element
     return group.identity
 
-def Inverse(group): # returns array of group elements with their corresponding inverses
+def Inverse(group, i): # returns array (or ith) of group elements with their corresponding inverses
     return group.inverses
-
 

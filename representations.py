@@ -36,15 +36,12 @@ class create_Rep:
     def display_rep_info(self):
             print(f"Representation has dict: {self.display_list}") #include more/neaten up
 
-    def get_Rep(self, element):
-            #Get the matrix representation of a group element.
-            return self.reps.get(element, None)
+    def get_RepElements(self, rep, i):
+            print self.display_list[i]
 
-        
-    
-    # verifying custom choices fit the formal definition of a representation
 
-    def check_homomorphism(self):
+
+    def check_homomorphism(self): #fix
             for g1 in self.group.elements:
                 for g2 in self.group.elements:
                     lhs = np.dot(self.reps[g1], self.reps[g2])
@@ -52,6 +49,28 @@ class create_Rep:
                     if not np.allclose(lhs, rhs):
                         return False
             return True
+
+    class IrreducibleRepresentation(Representation):
+    def __init__(self, group_elements, matrix_representation):
+        super().__init__(group_elements, matrix_representation)
+        
+    # Add methods specific to irreducible representations (if needed)
+
+class Decomposition:
+    def __init__(self, representation, irreps):
+        self.representation = representation
+        self.irreps = irreps
+    
+    def compute_decomposition(self):
+        decomposition = {}
+        for irrep in self.irreps:
+            char_irrep = Character(irrep)
+            decomposition[irrep] = 0
+            for element in self.representation.group_elements:
+                decomposition[irrep] += self.trace(element) * np.conj(char_irrep.trace(element))
+            decomposition[irrep] /= len(self.representation.group_elements)
+        return decomposition
+
 
 
 # Here we define the utility functions that come with representations.py
@@ -65,3 +84,27 @@ def Rep(group, matrices, vspace):
 
 def DisplayR(rep):
     return display_rep_info(rep)
+
+def RepElements(rep, i):
+    return get_RepElements(rep, i)
+    
+def is_homomorphism(rep_a, rep_b):
+    return check_homomorphism()
+
+def is_isomorphism(rep_a, rep_b):
+
+def is_reducible(rep):
+    # The approach here can vary; one simple method is checking for invariant subspaces
+    for matrix in rep:
+        eigenvalues, _ = np.linalg.eig(matrix)
+        if np.allclose(eigenvalues, eigenvalues[0]):  # Simplified check for a reducible matrix
+            return True
+    return False
+
+def is_decomposable(rep):
+    # This would require more sophisticated checks based on splitting the space into direct sums
+    # A simple approach could be to try checking for invariant subspaces.
+    for matrix in rep_matrix:
+        if np.linalg.matrix_rank(matrix) < matrix.shape[0]:  # Check if matrix has non-trivial kernel
+            return True
+    return False
