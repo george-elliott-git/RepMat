@@ -1,4 +1,4 @@
-# Project Title
+# RepMat: Representation theory of finite groups in Python.
 
 **RepMat**: Representation theory of finite groups in Python. RepMat also includes the creation of other custom or predefined mathematical objects in abstract algebra such as fields and vector spaces of n- or infinite dimensions.
 
