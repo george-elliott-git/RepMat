@@ -1,9 +1,6 @@
 import numpy as np
-import sys
-sys.path.append(r'D:\RepMatProject')
-from .vspaces import dim
+from src.vspaces import dim
 from .groups import GroupElements, create_Cyclic
-
 
 # representation.py
 
