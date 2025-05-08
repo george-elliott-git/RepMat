@@ -347,13 +347,13 @@ def Inverse(group, i): # returns array (or ith) of group elements with their cor
 
 def Conj_Class(group):
     conj_classes = []
-    set = set()
+    used_conj = set()  
     for g in GroupElements(group):
-        for g not in set:
+        conj_class = []  
+        if g not in used_conjugates: 
             for h in GroupElements(group):
                 conj = group.Optn(group, group.Optn(h, g), group.Inverse(h))
-                con_class.append(conj)
-            conj_classes.append(conj)
-            set.append(conj)
+                conj_class.append(conj)
+                used_conj.append(conj) 
+            conj_classes.append(conj_class)  
     return conj_classes
-
