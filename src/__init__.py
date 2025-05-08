@@ -1,6 +1,6 @@
 #RepMat/__init__.py
 from .vspaces import FiniteField, VctSp, Reals
-from .groups import Group, Cyclic, Sym, Alt, Dihe, K4, Quat, DisplayG, Group_Elements, Order, Optn, Identity, Inverse, create_Group
+from .groups import Group, Cyclic, Sym, Alt, Dihe, K4, Quat, DisplayG, GroupElements, Order, Optn, Identity, Inverse, create_Group
 from .representations import Rep, DisplayR, create_Rep
 from .characters import Character
 import numpy as np #doesnt import?
@@ -15,4 +15,8 @@ def Display(item):
         return item.display_rep_info()
     else:
         pass
+
+
+
+  
 

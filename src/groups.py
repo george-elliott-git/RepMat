@@ -51,15 +51,23 @@ class create_Group:
 
     # DISPLAY FUNCTION
 
+    global display_group_info
     def display_group_info(self):
-        print(f"Group with elements: {self.elements}")
-        print(f"Group operation: {self.operation}")
-        print(f"Identity: {self.identity}")
-        print(f"Inverses: {self.inverses}")
+        if isinstance(self, create_Group):
+            print(f"Group with elements: {self.elements}")
+            print(f"Group operation: {self.operation}")
+            print(f"Identity: {self.identity}")
+            print(f"Inverses: {self.inverses}")
+        elif isinstance(self, create_Cyclic or create_Sym):
+            print(f"Group of class: {isinstance.__class__.__base__}")
+            print(f"Group with elements: {self.elements}")
+            print(f"Group operation: {self.operation}")
 
 # STANDARD GROUP CLASSES [CYCLIC, SYMMETRIC, ALTERNATING,
     #DIHEDRAL all require a parameter n which is the order of the group.
     #The KLEIN-4 and QUATERNION groups are entirely preset.]
+
+# CYCLIC GROUPS
 
 class create_Cyclic:
     def __init__(self, elements):
@@ -72,57 +80,64 @@ class create_Cyclic:
         return value % len(self.elements)
 
     def __str__(self):
-        return f"C{len(self.elements)}"
+       return f"C{len(self.elements)}"
+
+# SYMMETRIC GROUPS
 
 class create_Sym:
     def __init__(self, elements):
-        self.elements = list(elements)
-        # Generate all possible permutations of the set
+        # Convert the elements to a sorted list if they are a set, to ensure consistent ordering
+        self.elements = list(sorted(elements)) if isinstance(elements, set) else list(elements)
+        # Generate all permutations of the elements
         self.permutations = list(itertools.permutations(self.elements))
 
     def operation(self, perm_a, perm_b):
-        # Composition of two permutations: apply perm_b first, then perm_a
+        # Ensure the permutations are valid (of the same length as self.elements)
+        if len(perm_a) != len(self.elements) or len(perm_b) != len(self.elements):
+            raise ValueError("Permutations must have the same length as the number of elements")
+        
+        # Perform the operation: perm_a applied on perm_b
         return tuple(perm_a[perm_b[i]] for i in range(len(self.elements)))
 
-    def __call__(self, value):
-        # Apply the identity permutation (no change)
-        return value
-
     def __str__(self):
-        # Represent the symmetric group as S_n, where n is the number of elements
+        # String representation of the symmetric group based on its size
         return f"S{len(self.elements)}"
 
     def apply_permutation(self, perm, element):
-        # Apply a permutation to an element
+        # Apply the permutation to a specific element (indexing into the permutation)
         return perm[element]
     
     def get_permutations(self):
-        # Return all permutations of the group
+        # Return the list of all permutations
         return self.permutations
 
-class create_Alt:
+# ALTERNATING GROUPS
+
+class create_Alt(create_Sym):  # Inherit from create_Sym
     def __init__(self, elements):
-        self.n = len(elements)
-        self.symmetric_group = create_Sym(n)
-        self.group = [perm for perm in self.symmetric_group.group if perm.is_even()]
+        # Initialize the symmetric group first
+        super().__init__(elements)
+        # Filter even permutations for the alternating group
+        self.alt_permutations = [perm for perm in self.permutations if self.is_even(perm)]
 
-    def __repr__(self):
-        return f"create_Alt(A_{self.n}) with {len(self.group)} elements"
+    def is_even(self, perm):
+        """Check if a permutation is even by counting inversions."""
+        inversions = sum(1 for i in range(len(perm)) for j in range(i + 1, len(perm)) if perm[i] > perm[j])
+        return inversions % 2 == 0
 
-    def compose(self, p1, p2):
-        """Compose two permutations from the group."""
-        return p1.compose(p2)
+    def get_permutations(self):
+        """Return only the even permutations (alternating group)."""
+        return self.alt_permutations
 
-    def is_identity(self, perm):
-        """Check if the permutation is the identity permutation."""
-        return perm.perm == list(range(1, self.n + 1))
+    def __str__(self):
+        """String representation of the alternating group."""
+        return f"A{len(self.elements)}"
 
+# DIHEDRAL GROUPS
 
-
-class create_DihedralGroup:
+class create_Dihe:
     def __init__(self, n):
-        # n is the order of the group (number of rotations)
-        self.n = n
+        self.n = len(n)
         self.elements = self.generate_elements()
         
     def generate_elements(self):
@@ -175,6 +190,8 @@ class create_DihedralGroup:
     def get_elements(self):
         return self.elements
 
+# KLEIN-4 GROUPS
+
 class create_K4:
     def __init__(self):
         # Define the elements of the Klein Four group V_4
@@ -204,6 +221,7 @@ class create_K4:
     def get_elements(self):
         return self.elements
 
+# QUARTERNION GROUPS
 
 class create_Quat:
     def __init__(self):
@@ -266,23 +284,34 @@ def Cyclic(elements_or_order):
     if isinstance(elements_or_order, int):
         return create_Cyclic(range(elements_or_order))
     else:
-        return create_Cyclic(elements)
+        return create_Cyclic(elements_or_order)
 
 def Sym(elements_or_order):
-    if isinstance(elements_or_order, int):
-        create_Sym(
-
-                self.elements = list(range(elements_or_order))
+    if isinstance(elements_or_order, int) and elements_or_order >= 0:
+        return create_Sym(list(range(elements_or_order + 1)))
+    elif isinstance(elements_or_order, list):
+        return create_Sym(elements_or_order)
     else:
-        # Otherwise, treat the input as a custom set of elements
-        self.elements = list(elements_or_n)
+        raise ValueError("Input must be a non-negative integer or list of custom objects.")
 
-def Alt(elements):
-    return create_Alt(elements)
+def Alt(elements_or_order):
+    if isinstance(elements_or_order, int) and elements_or_order >= 0:
+        return create_Alt(list(range(elements_or_order)))
+    elif isinstance(elements_or_order, list):
+        return create_Alt(elements_or_order)
+    else:
+        raise ValueError("Input must be a non-negative integer or list of custom objects.")
 
-def Dihe(elements):
-    return create_Dihe(elements)
 
+def Dihe(elements_or_order):
+    if isinstance(elements_or_order, int) and elements_or_order >= 0:
+        return create_Dihe(list(range(elements_or_order + 1)))
+    elif isinstance(elements_or_order, list):
+        return create_Dihe(elements_or_order)
+    else:
+        raise ValueError("Input must be a non-negative integer or list of custom objects.")
+
+    
 def K4():
     return create_K4()
 
@@ -294,7 +323,14 @@ def Quat():
 def DisplayG(group):
     return display_group_info(group)
     
-def GroupElements(group, i): #returns array (or ith) group element
+def GroupElements(group, i=None): #returns array (or ith) group element
+    if i is None:
+        return group.elements  # Return the entire list
+    else:
+        try:
+            return group.elements[i]  # Return the element at index i
+        except IndexError:
+            return None  # Return None if index is out of range
     return group.elements
 
 def Order(group): # returns group order
@@ -308,3 +344,6 @@ def Identity(group):# returns identity element
 
 def Inverse(group, i): # returns array (or ith) of group elements with their corresponding inverses
     return group.inverses
+
+
+

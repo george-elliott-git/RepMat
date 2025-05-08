@@ -9,13 +9,12 @@ from sympy import S
 
 global Naturals
 Naturals = S.Naturals
-
 Integers = S.Integers
 Rationals = S.Rationals
 global Reals
 Reals = S.Reals
-
 Complexes = S.Complexes
+
 
 #Of course, the user could just implement these fields from Sympy directly; they're just defined here anyways to illustrate RepMat's functionality.
 
@@ -25,7 +24,7 @@ class create_Finite_Field:
     def __init__(self, prime_number):
         if not self.is_prime(prime_number):
             raise ValueError("p must be prime to form a finite field.")
-        self.p = p
+        self.p = prime_number
 
     def add(self, a, b):
         return (a + b) % self.p
@@ -47,16 +46,23 @@ class create_Finite_Field:
                 return False
         return True
 
+    def display_cfield_info(self):
+        print(f"Group with elements: {self.elements}")
+        print(f"Group operation: {self.operation}")
+        print(f"Identity: {self.identity}")
+        print(f"Inverses: {self.inverses}")
+
+
 
 # custom vector spaces
 
-class create_Vector_Space:
+class create_VSpace:
     def __init__(self, field, basis_vectors):
         self.field = field
         self.basis_vectors = [np.array(v) for v in basis_vectors]
 
     def __repr__(self):
-        return f"VectorSpace({self.basis_vectors})"
+        return f"VSpace({self.basis_vectors})"
 
 
     # checks for linear independence, vspace axioms and whether it is in the field
@@ -71,14 +77,40 @@ class create_Vector_Space:
 
     #DISPLAY FUNCTIONS!!
 
-        
-# Here are the user functions which allow the creation of custom fields and vector spaces
+    def display_vspace_info(self):
+        print(f"Group with elements: {self.elements}")
+        print(f"Group operation: {self.operation}")
+        print(f"Identity: {self.identity}")
+        print(f"Inverses: {self.inverses}")
+
+
+# CREATION
 
 def FiniteField(prime_number):
     return create_Finite_Field(prime_number)
 
 def VctSp(field, basis_vectors):
-    return create_Vector_Space(field, basis_vectors)
+    return create_VSpace(field, basis_vectors)
+
+def Z(n):
+    integer_bases = np.eye(n, dtype=int)
+    return create_VSpace(Integers, integer_bases)
+
+def R(n):
+    real_bases = np.eye(n)
+    return create_VSpace(Reals, real_bases)
+def C(n):
+    complex_bases = np.eye(n, dtype=complex)
+    return create_VSpace(Complexes, complex_bases)
+
+
+# DISPLAY & RECALL
+
+def DisplayF(field):
+    return display_field_info(field)
+
+def DisplayV():
+    return display_vspace_info(vspace)
 
 def dim(vspace):
     return dim(vspace)

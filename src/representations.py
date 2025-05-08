@@ -2,7 +2,7 @@ import numpy as np
 import sys
 sys.path.append(r'D:\RepMatProject')
 from .vspaces import dim
-from .groups import GroupElements, create_Cyclic, create_Perm
+from .groups import GroupElements, create_Cyclic
 
 
 # representation.py
@@ -37,7 +37,7 @@ class create_Rep:
             print(f"Representation has dict: {self.display_list}") #include more/neaten up
 
     def get_RepElements(self, rep, i):
-            print self.display_list[i]
+            print(self.display_list[i])
 
 
 
@@ -50,26 +50,26 @@ class create_Rep:
                         return False
             return True
 
-    class IrreducibleRepresentation(Representation):
-    def __init__(self, group_elements, matrix_representation):
-        super().__init__(group_elements, matrix_representation)
+    class IrreducibleRepresentation:
+        def __init__(self, group_elements, matrix_representation):
+            super().__init__(group_elements, matrix_representation)
         
     # Add methods specific to irreducible representations (if needed)
 
-class Decomposition:
-    def __init__(self, representation, irreps):
-        self.representation = representation
-        self.irreps = irreps
-    
-    def compute_decomposition(self):
-        decomposition = {}
-        for irrep in self.irreps:
-            char_irrep = Character(irrep)
-            decomposition[irrep] = 0
-            for element in self.representation.group_elements:
-                decomposition[irrep] += self.trace(element) * np.conj(char_irrep.trace(element))
-            decomposition[irrep] /= len(self.representation.group_elements)
-        return decomposition
+    class Decomposition:
+        def __init__(self, representation, irreps):
+            self.representation = representation
+            self.irreps = irreps
+        
+        def compute_decomposition(self):
+            decomposition = {}
+            for irrep in self.irreps:
+                char_irrep = Character(irrep)
+                decomposition[irrep] = 0
+                for element in self.representation.group_elements:
+                    decomposition[irrep] += self.trace(element) * np.conj(char_irrep.trace(element))
+                decomposition[irrep] /= len(self.representation.group_elements)
+            return decomposition
 
 
 
@@ -104,6 +104,7 @@ def is_homomorphism(rep_a, rep_b):
     return check_homomorphism()
 
 def is_isomorphism(rep_a, rep_b):
+    pass
 
 def is_reducible(rep):
     # The approach here can vary; one simple method is checking for invariant subspaces
@@ -120,3 +121,6 @@ def is_decomposable(rep):
         if np.linalg.matrix_rank(matrix) < matrix.shape[0]:  # Check if matrix has non-trivial kernel
             return True
     return False
+
+
+
