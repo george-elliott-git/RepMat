@@ -2,10 +2,13 @@
 
 import unittest
 
+
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.realpath(__file__)) + "/../src")
 # Here we test some: CUSTOM FINITE FIELDS, INFINITE FIELDS, CUSTOM & STANDARD VSPACES
 
-from RepMat import vspaces
-from RepMat.vspaces import create_Finite_Field, create_VSpace
+import RepMat
 
 # CUSTOM FINITE FIELDS
 

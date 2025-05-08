@@ -5,8 +5,10 @@
 
 import unittest
 
-from RepMat import groups
-from RepMat.groups import create_Group
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.realpath(__file__)) + "/../src")
+import RepMat
 
 
 # CUSTOM GROUPS (example)
