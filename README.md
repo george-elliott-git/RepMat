@@ -73,28 +73,33 @@ If the user's choice of elements and operation don't fit the group axioms, an in
 
 RepMat has many other elementary groups, such as symmetric, dihedral, klein-4, and even quarternion groups, but their functionality in RepMat is mainly designed as a means to an end to create representations. 
 
+### Representations and their operations
 
-
-```python
-import tsp
-
-tour = tsp.run_2_opt_algorithm(number_of_stops=4, distance_matrix=distance_matrix, iterations=1000, seed=0)
-```
-
-We can see the tour here:
+Now let's create a representation of the cyclic group with 8 elements. We have a group, a vector space, and we also need the set of matrix representations themselves. For large groups like C8, we will achieve this as follows using numpy:
 
 ```python
-tour
+
+import numpy as np
+
+# Number of elements in C8
+n = 8
+
+# Create the list of matrices
+C8_matrices = []
+
+for k in range(n):
+    angle = 2 * np.pi * k / n
+    matrix = np.array([
+        [np.cos(angle), -np.sin(angle)],
+        [np.sin(angle),  np.cos(angle)]
+    ])
+    C8_matrices.append(matrix)
+
+rep = RepMat.Rep(C8, C8_matrices, R(1))
+
 ```
 
-This gives:
-
-```
-[0, 3, 1, 2, 0]
-```
-
-The `tsp` library includes further functionality which you can read in the
-How To guides.
+tbc....
 
 ## How to guides
 
@@ -102,39 +107,6 @@ How To guides.
 
 To obtain a basic tour, we use the `tsp.get_tour` function:
 
-```python
-import tsp
-
-tsp.get_tour(number_of_stops=5)
-```
-
-This gives
-
-```
-[0, 1, 2, 3, 4, 0]
-```
-
-If we pass a random seed this will also shuffle the interior stops (in a
-reproducible manner):
-
-```python
-tsp.get_tour(number_of_stops=5, seed=0)
-```
-
-This gives:
-
-```
-[0, 3, 4, 2, 1, 0]
-```
-
-### How to swap two spots
-
-To swap two cities for a given tour, we use the `tsp.swap_cities` function:
-
-```python
-tour = [0, 1, 2, 3, 4, 5, 0]
-tsp_swap_cities(tour=tour, indices=(2, 4))
-```
 
 This gives:
 
