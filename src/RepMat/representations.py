@@ -1,5 +1,5 @@
 import numpy as np
-from src.vspaces import dim
+from src.RepMat.vspaces import dim
 from .groups import GroupElements, create_Cyclic
 
 # representation.py
