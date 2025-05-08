@@ -9,8 +9,6 @@ from RepMat import groups
 from RepMat.groups import create_Group
 
 
-
-
 # CUSTOM GROUPS (example)
 
 class test_custom_groups(unittest.TestCase):

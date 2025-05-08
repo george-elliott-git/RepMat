@@ -7,11 +7,10 @@ from sympy import S
 
 #We implement the predefined infinite fields: N, Z, Q, R, and C
 
-global Naturals
+global Naturals, Integers, Rationals, Reals, Complexes
 Naturals = S.Naturals
 Integers = S.Integers
 Rationals = S.Rationals
-global Reals
 Reals = S.Reals
 Complexes = S.Complexes
 

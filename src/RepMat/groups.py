@@ -336,8 +336,8 @@ def GroupElements(group, i=None): #returns array (or ith) group element
 def Order(group): # returns group order
     return len(group.elements)
 
-def Optn(group): # returns groups operation
-    return group.operation
+def Optn(group, a, b): # returns groups operation * s.t. a * b
+    return group.operation(a, b)
 
 def Identity(group):# returns identity element
     return group.identity
@@ -345,5 +345,15 @@ def Identity(group):# returns identity element
 def Inverse(group, i): # returns array (or ith) of group elements with their corresponding inverses
     return group.inverses
 
-
+def Conj_Class(group):
+    conj_classes = []
+    set = set()
+    for g in GroupElements(group):
+        for g not in set:
+            for h in GroupElements(group):
+                conj = group.Optn(group, group.Optn(h, g), group.Inverse(h))
+                con_class.append(conj)
+            conj_classes.append(conj)
+            set.append(conj)
+    return conj_classes
 

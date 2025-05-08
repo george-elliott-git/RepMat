@@ -12,14 +12,20 @@ class Character:
     def __init__(self, rep):
         self.rep = rep
 
-    global
+    global trace
     def trace(self, rep, i):
         matrix = (self.rep, i).RepElements.representations()
         return np.trace(matrix)
     
+    global character_table
     def character_table(self):
+        Conj_Classes = []
+        Irreps_to_Chars = []
+    
+        
+        
         for element in (self.rep).RepElements.representations():
-            
+
             
         col_names = ["Conjugacy Class", "Class Representative"]
         #for i in ... append
