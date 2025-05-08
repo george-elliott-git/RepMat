@@ -2,11 +2,11 @@
 from .vspaces import FiniteField, VctSp, Reals
 from .groups import Group, Cyclic, Sym, Alt, Dihe, K4, Quat, DisplayG, GroupElements, Order, Optn, Identity, Inverse, create_Group
 from .representations import Rep, DisplayR, create_Rep
-from .characters import Character
+from .characters import Char
 import numpy as np #doesnt import?
 import sympy
 
-__all__ = ['Character', 'FiniteField', 'VectorSpace', 'Group', 'Cyclic', 'Display', 'Order', 'Rep']
+__all__ = ['Char', 'FiniteField', 'VectorSpace', 'Group', 'Cyclic', 'Display', 'Order', 'Rep']
 
 def Display(item):
     if isinstance(item, create_Group):

@@ -1,12 +1,9 @@
 # test_vspaces.py
 
-# Here we test some: CUSTOM FINITE FIELDS, INFINITE FIELDS, CUSTOM & STANDARD VSPACES
-
-import sys
-sys.path.append(r'D:\RepMatProject')
 import unittest
 
-import RepMat
+# Here we test some: CUSTOM FINITE FIELDS, INFINITE FIELDS, CUSTOM & STANDARD VSPACES
+
 from RepMat import vspaces
 from RepMat.vspaces import create_Finite_Field, create_VSpace
 
@@ -18,7 +15,7 @@ class test_finite_fields(unittest.TestCase):
 
     def test_ffields(self):
         for j in range(1, 10):
-            vspace = RepMat.vspaces.Z(j)
+            field = RepMat.vspaces.Z(j)
             for i in self.test_set: 
                 RepMat.VctSp(RepMat.FiniteField(i), vspace)
             

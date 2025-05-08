@@ -1,8 +1,6 @@
+from vspaces import dim
+from groups import GroupElements, create_Cyclic
 import numpy as np
-from src.RepMat.vspaces import dim
-from .groups import GroupElements, create_Cyclic
-
-# representation.py
 
 # allows the user to create representations for standard or custom groups
 
@@ -34,9 +32,7 @@ class create_Rep:
             print(f"Representation has dict: {self.display_list}") #include more/neaten up
 
     def get_RepElements(self, rep, i):
-            print(self.display_list[i])
-
-
+            return self.display_list[i]
 
     def check_homomorphism(self): #fix
             for g1 in self.group.elements:
@@ -50,23 +46,7 @@ class create_Rep:
     class IrreducibleRepresentation:
         def __init__(self, group_elements, matrix_representation):
             super().__init__(group_elements, matrix_representation)
-        
-    # Add methods specific to irreducible representations (if needed)
 
-    class Decomposition:
-        def __init__(self, representation, irreps):
-            self.representation = representation
-            self.irreps = irreps
-        
-        def compute_decomposition(self):
-            decomposition = {}
-            for irrep in self.irreps:
-                char_irrep = Character(irrep)
-                decomposition[irrep] = 0
-                for element in self.representation.group_elements:
-                    decomposition[irrep] += self.trace(element) * np.conj(char_irrep.trace(element))
-                decomposition[irrep] /= len(self.representation.group_elements)
-            return decomposition
 
 
 
@@ -100,22 +80,10 @@ def RepElements(rep, i):
 def is_homomorphism(rep_a, rep_b):
     return check_homomorphism()
 
-def is_isomorphism(rep_a, rep_b):
-    pass
-
 def is_reducible(rep):
-    # The approach here can vary; one simple method is checking for invariant subspaces
     for matrix in rep:
         eigenvalues, _ = np.linalg.eig(matrix)
-        if np.allclose(eigenvalues, eigenvalues[0]):  # Simplified check for a reducible matrix
-            return True
-    return False
-
-def is_decomposable(rep):
-    # This would require more sophisticated checks based on splitting the space into direct sums
-    # A simple approach could be to try checking for invariant subspaces.
-    for matrix in rep_matrix:
-        if np.linalg.matrix_rank(matrix) < matrix.shape[0]:  # Check if matrix has non-trivial kernel
+        if np.allclose(eigenvalues, eigenvalues[0]): 
             return True
     return False
 

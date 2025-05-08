@@ -1,27 +1,31 @@
 # characters.py
 
-# character tables, trace, inner product
-
-
-# character of a representation Char(representation, i)
 # generate character table
 # orthogonality of rows/columns Orth(representatation, i, j)
 # inner products
 
 import numpy as np
+from tabulate import tabulate
+from .representations import create_Rep, is_reducible
 
 class Character:
     def __init__(self, rep):
         self.rep = rep
 
-    def trace(self, element):
-        matrix = (self.rep).RepElements.representations()
+    global
+    def trace(self, rep, i):
+        matrix = (self.rep, i).RepElements.representations()
         return np.trace(matrix)
     
     def character_table(self):
-        # Calculate the character table (trace for each group element)
-        table = {}
-        for element in (self.rep).RepElements.representations()
+        for element in (self.rep).RepElements.representations():
+            
+            
+        col_names = ["Conjugacy Class", "Class Representative"]
+        #for i in ... append
+        print(tabulate(data, headers=col_names, tablefmt="grid", showindex="always"))
+            
+            
             table[element] = self.trace(element)
         return table
 
@@ -36,12 +40,9 @@ class Character:
 
 # DISPLAY & RECALL
 
+def Char(rep, i):
+    return trace(rep, i)
 
-def Char_Table(character):
-    char_table = character.character_table()
-    for elem, value in char_table.items():
-        print(f"Character for element {elem}: {value}")
-        
-def Decomp(decomposition):
-    for irrep, multiplicity in decomposition.items():
-        print(f"Multiplicity of {irrep}: {multiplicity}")
+def Char_Table(rep):
+    char_table = rep.character_table()
+    

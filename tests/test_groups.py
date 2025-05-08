@@ -2,11 +2,9 @@
 
 # Here we test some: CUSTOM GROUPS, STANDARD GROUPS, GROUP OPERATIONS
 
-import sys
-sys.path.append(r'D:\RepMatProject')
+
 import unittest
 
-import RepMat
 from RepMat import groups
 from RepMat.groups import create_Group
 
