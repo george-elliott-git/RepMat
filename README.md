@@ -27,8 +27,9 @@ So our standout function requires us to (1) define a group, (2) a list of matric
 In RepMat we must define a vector space over a specified field K. For fields, RepMat provides a host of 'elementary' infinite fields like $$, $$, and $$, but also allows for the creation of finite, or Galois, fields with the integers mod p where p is a prime number.
 
 ```python
+import RepMat
 
-
+vspace_with_ff = VctSp(RepMat.FiniteField(i), vspace)
 ```
 
 To create a vector space, we must 
@@ -38,12 +39,6 @@ For example,
 basis_vectors = [np.array([1, 0]), np.array([0, 1])]
 vspace = RepMat.VctSp(RepMat.Reals, basis_vectors)
 
-```
-
-These simple mathematical objects can be used in midly interesting way. For instance,
-
-```python
-fggg
 ```
 
 ### Groups
@@ -96,16 +91,30 @@ for k in range(n):
     C8_matrices.append(matrix)
 
 rep = RepMat.Rep(C8, C8_matrices, R(1))
-
 ```
-
-tbc....
 
 ## How to guides
 
 ### How create a character table
 
-## Schur's Lemma
+Here is how to create a character table:
+
+```python
+import RepMat
+
+Char(custom_rep)
+Char_Table(custom_rep)
+
++---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+
+| Class               | Class 0 (Identity)  | Class 1 (g)         | Class 2 (g²)        | Class 3 (g³)        | Class 4 (g⁴)        |
++---------------------+---------------------+---------------------+---------------------+---------------------+---------------------+
+| χ1                  | 1                   | 1                   | 1                   | 1                   | 1                   |
+| χ2                  | 1                   | 0.3090              | -0.8090             | -0.8090             | 0.3090              |
+| χ3                  | 1                   | -0.8090             | 0.3090              | 0.3090              | -0.8090             |
+| χ4                  | 1                   | -0.8090             | 0.3090              | 0.3090              | -0.8090             |
+| χ5                  | 1                   | 0.3090              | -0.8090             | -0.8090             | 0.3090              |....
++---------------------+---------------------+---------------------+-------
+```
 
 ### Formal Definition of a Group Representation
 
@@ -133,8 +142,6 @@ where $e$ is the identity element of $G$ and $\mathrm{id}_V$ is the identity tra
 In this context, $\rho$ defines how each element of $G$ acts as a linear transformation on the vector space $V$, preserving the group structure. RepMat allows these groups to be leveraged with advanced utility functions such as tensor products and character tables.
 
 According to this formal definition of a representation, RepMat must allow for the creation of vector spaces and fields. Although these mathematical objects aren't intended to be as interesting in isolation, we have implemented several utility functions which may be of use. Additionally, we have included the applications of some of Representation Theory's most notable theorems and lemmas in the tutorial as a demonstration of its mathematical soundness.
-
-
 
 
 ### Dependencies
@@ -222,11 +229,7 @@ This software implements a wide array of functions:
 
 ### Bibliography
 
-The wikipedia page on the TSP offers good background reading:
-https://en.wikipedia.org/wiki/Travelling_salesman_problem
-
-The following text is a recommended text on neighbourhood search algorithms:
-
-> Aarts, Emile, Emile HL Aarts, and Jan Karel Lenstra, eds. Local search in
-> combinatorial optimization. Princeton Univers
+https://en.wikipedia.org/wiki/Representation_theory
+https://math.mit.edu/~etingof/representationtheorybook.pdf
+https://en.wikipedia.org/wiki/Langlands_program
 
