@@ -45,6 +45,7 @@ class create_Finite_Field:
                 return False
         return True
 
+    global display_cfield_info
     def display_cfield_info(self):
         print(f"Group with elements: {self.elements}")
         print(f"Group operation: {self.operation}")
@@ -74,13 +75,13 @@ class create_VSpace:
     def dim(self):
         return len(self.basis_vectors)
 
-    #DISPLAY FUNCTIONS!!
-
+    global display_vspace_info
     def display_vspace_info(self):
-        print(f"Group with elements: {self.elements}")
-        print(f"Group operation: {self.operation}")
-        print(f"Identity: {self.identity}")
-        print(f"Inverses: {self.inverses}")
+        if isinstance(self, VctSp):
+            print(f"Vector space with bases: {self.basis_vectors} over the field {self.field}")
+        else:
+            raise ValueError("Input must be a valid vector space.")
+        
 
 
 # CREATION
@@ -106,9 +107,14 @@ def C(n):
 # DISPLAY & RECALL
 
 def DisplayF(field):
-    return display_field_info(field)
+    if isinstance(field, create_Finite_Field):
+        return display_cfield_info(field)
+    elif field == Naturals or Integers or Rationals or Reals or Complexes:
+        print(f"Standard Field")
+    else:
+        raise ValueError("Input must be a valid field.")
 
-def DisplayV():
+def DisplayV(vspace):
     return display_vspace_info(vspace)
 
 def dim(vspace):

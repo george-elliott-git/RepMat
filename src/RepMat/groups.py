@@ -350,7 +350,7 @@ def Conj_Class(group):
     used_conj = set()  
     for g in GroupElements(group):
         conj_class = []  
-        if g not in used_conjugates: 
+        if g not in used_conj: 
             for h in GroupElements(group):
                 conj = group.Optn(group, group.Optn(h, g), group.Inverse(h))
                 conj_class.append(conj)

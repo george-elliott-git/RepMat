@@ -25,14 +25,19 @@ class Character:
         
         
         for element in (self.rep).RepElements.representations():
+            pass
 
             
         col_names = ["Conjugacy Class", "Class Representative"]
         #for i in ... append
+        data = [["Mavs", 99], 
+        ["Suns", 91], 
+        ["Spurs", 94], 
+        ["Nets", 88]]
         print(tabulate(data, headers=col_names, tablefmt="grid", showindex="always"))
             
             
-            table[element] = self.trace(element)
+        table[element] = self.trace(element)
         return table
 
     def inner_product(self, other_character):

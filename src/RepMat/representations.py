@@ -1,5 +1,5 @@
-from vspaces import dim
-from groups import GroupElements, create_Cyclic
+from .vspaces import dim, R
+from .groups import GroupElements, create_Cyclic
 import numpy as np
 
 # allows the user to create representations for standard or custom groups
@@ -28,12 +28,15 @@ class create_Rep:
 
     #DISPLAY & RECALL FUNCTIONS
 
+    global display_rep_info
     def display_rep_info(self):
             print(f"Representation has dict: {self.display_list}") #include more/neaten up
 
+    global get_RepElements
     def get_RepElements(self, rep, i):
             return self.display_list[i]
 
+    global check_homomorphism
     def check_homomorphism(self): #fix
             for g1 in self.group.elements:
                 for g2 in self.group.elements:
@@ -57,8 +60,8 @@ class create_Rep:
 def Rep(group, matrices, vspace):
     if isinstance(group, create_Cyclic):
         rep_matrices = []
-        for k in range(n):
-            angle = 2 * np.pi * k / n
+        for k in range(group.n):
+            angle = 2 * np.pi * k / group.n
             matrix = np.array([
                 [np.cos(angle), -np.sin(angle)],
                 [np.sin(angle),  np.cos(angle)]
