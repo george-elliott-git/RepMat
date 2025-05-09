@@ -33,8 +33,7 @@ class Character:
                 pass
     
         character_values = []
-        for i in Irreps:
-            print(f"Enter character values for irreducible representation {i+1} over each conjugacy class:")
+        for i in Irreps:    
             values = list(map(int, trace(i)).split())
             character_values.append(values)
 
