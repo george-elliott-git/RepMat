@@ -6,7 +6,9 @@
 
 import numpy as np
 from tabulate import tabulate
-from .representations import create_Rep, is_reducible
+import groups
+
+from representations import create_Rep, is_reducible
 
 class Character:
     def __init__(self, rep):
@@ -19,26 +21,42 @@ class Character:
     
     global character_table
     def character_table(self):
-        Conj_Classes = []
-        Irreps_to_Chars = []
-    
+        # Identify Conjugates
         
-        
+        Conj_Class = groups.Conj_Classes(self.rep)
+        #Identify Irreducible Representations
+        Irreps = []
         for element in (self.rep).RepElements.representations():
-            pass
+            if representations.is_reducible(element) is True:
+                Irreps.append(element)
+            else:
+                pass
+    
+        character_values = []
+        for i in Irreps:
+            print(f"Enter character values for irreducible representation {i+1} over each conjugacy class:")
+            values = list(map(int, trace(i)).split())
+            character_values.append(values)
 
+        # Define the irreducible representations
+        representations = [f"χ{i+1}" for i in (self.rep).RepElements.representations()]
+
+        # Create table headers
+        headers = ['Class'] + Conj_Class
+            #Create Character Table
+        table_data = [headers]
+        for i, rep in enumerate(Irreps):
+            row = [rep] + character_values[i]
+            table_data.append(row)
+
+        # Print the table
+        print("\nCharacter Table:")
+        print(tabulate(table_data, headers='firstrow', tablefmt='grid'))
+            #Check with Orthogonality Relations
+        
             
-        col_names = ["Conjugacy Class", "Class Representative"]
-        #for i in ... append
-        data = [["Mavs", 99], 
-        ["Suns", 91], 
-        ["Spurs", 94], 
-        ["Nets", 88]]
-        print(tabulate(data, headers=col_names, tablefmt="grid", showindex="always"))
             
-            
-        table[element] = self.trace(element)
-        return table
+    
 
     def inner_product(self, other_character):
         # Assuming group G is finite and we have the size of the group |G|
@@ -55,5 +73,5 @@ def Char(rep, i):
     return trace(rep, i)
 
 def Char_Table(rep):
-    char_table = rep.character_table()
+    char_table = character_table()
     

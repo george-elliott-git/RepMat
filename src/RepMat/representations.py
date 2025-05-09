@@ -46,10 +46,6 @@ class create_Rep:
                         return False
             return True
 
-    class IrreducibleRepresentation:
-        def __init__(self, group_elements, matrix_representation):
-            super().__init__(group_elements, matrix_representation)
-
 
 
 

@@ -354,8 +354,6 @@ def GroupElements(group, i=None):
 def Order(group): # returns group order
     return len(group.elements)
 
-
-
 def Identity(group):# returns identity element
     return find_identity(group)
 
