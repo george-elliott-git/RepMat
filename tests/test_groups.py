@@ -6,7 +6,7 @@
 import unittest
 
 import RepMat
-from RepMat import groups
+from RepMat import groups, create_Group, Cylic, Sym, Alt, Dihe
 
 # CUSTOM GROUPS (example)
 

@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "RepMat"
 version = "0.1.0"
-description = "Your project description here"
+description = "A library for representation theory and groups in python. "
 readme = "README.md"
 license = { text = "MIT" }  # Not as a table!
 authors = [
@@ -23,3 +23,8 @@ pythonpath = ["src"]
 [project.urls]
 Homepage = "https://github.com/george-elliott-git/RepMat"
 Documentation = "https://yourdocs.com"
+
+# Add package data to include additional files
+[tool.setuptools.package-data]
+* = ["README.md", "LICENSE", "tests/*"]
+
