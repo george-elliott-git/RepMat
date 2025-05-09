@@ -13,8 +13,8 @@ class test_finite_fields(unittest.TestCase):
         self.test_set = [3, 5, 7, 11]
 
     def test_ffields(self):
-        vspace = RepMat.vspaces.Z(j)
         for j in range(1, 10):
+            vspace = RepMat.vspaces.Z(j)
             for i in self.test_set: 
                 RepMat.VctSp(RepMat.FiniteField(i), vspace)
             
