@@ -1,12 +1,12 @@
 # test_groups.py
 
-# Here we test some: CUSTOM GROUPS, STANDARD GROUPS, GROUP OPERATIONS
+# Here we test some: CUSTOM GROUPS, STANDARD GROUPS, GROUP FUNCTIONS
 
 
 import unittest
 
 import RepMat
-from RepMat import groups, create_Group, Cyclic, Sym, Alt, Dihe
+from RepMat import groups, create_Group, Cyclic, Sym, Alt, Dihe, Optn
 
 # CUSTOM GROUPS (example)
 
@@ -52,6 +52,23 @@ class test_all_standards_groups(unittest.TestCase):
         test_dihedral = RepMat.Dihe(self.test_set)
         print("DIHEDRAL EXAMPLE")
         RepMat.groups.DisplayG(test_dihedral)
-        
+
+# TESTING GROUP FUNCTIONS
+
+class test_group_functions(unittest.TestCase):
+    def setUp(self):
+        self.test_custom_set = {0, 1, 2, 3}
+        self.test_custom_operation = lambda a, b: (a + b) % 4
+        self.custom_group = groups.Group(self.test_custom_set, self.test_custom_operation)
+
+    def test_Conjugacy_Classes(self):
+        x = groups.Conj_Class(self.custom_group)
+        print(x)
+
+
+
+
+
+
 if __name__ == '__main__':
     unittest.main()

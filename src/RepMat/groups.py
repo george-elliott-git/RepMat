@@ -11,13 +11,18 @@ class create_Group:
         # By definition of a group, we require an identity, an inverse, and group associativity
         self.elements = set(elements)
         self.operation = operation
-
         # Check if closure holds
         self.check_closure()
         
         # Check for identity and inverses
         self.identity = self.find_identity()
-        self.inverses = self.find_inverses()
+        
+
+    global Optn
+    def Optn(group, a, b): # returns groups operation * s.t. a * b
+        return group.operation(a, b)
+
+        
 
     # Here we define the constituent functions which form the group_check() function.
 
@@ -27,21 +32,33 @@ class create_Group:
                 if self.operation(x, y) not in self.elements:
                     raise ValueError("Closure property does not hold!")
 
+    
     def find_identity(self):
         for e in self.elements:
             if all(self.operation(e, x) == x and self.operation(x, e) == x for x in self.elements):
-                return e
+                global identity
+                identity = e
+                return identity
         raise ValueError("No identity element found!")
+    
 
-    def find_inverses(self):
-        inverses = {}
-        for x in self.elements:
-            for y in self.elements:
-                if self.operation(x, y) == self.identity and self.operation(y, x) == self.identity:
-                    inverses[x] = y
-                    break
-            else:
-                raise ValueError(f"No inverse found for value {x}")
+    global find_inverses
+    def find_inverses(self, i=None):
+        if i is None:
+            inverses = {}
+            for x in self.elements:
+                for y in self.elements:
+                    if self.operation(x, y) == self.identity and self.operation(y, x) == self.identity:
+                        inverses[x] = y
+                        break
+        else:
+            try:
+                for x in self.elements:
+                    if self.operation(i, x) == self.identity and self.operation(x, i) == self.identity:
+                        inverse = x
+                        return inverse 
+            except IndexError:
+                return None  
         return inverses
 
     # The group_check() function is vital for ensuring custom groups satisfies the group axioms.
@@ -280,6 +297,7 @@ class create_Quat:
 def Group(elements, operation):
     return create_Group(elements, operation)
 
+
 def Cyclic(elements_or_order):
     if isinstance(elements_or_order, int):
         return create_Cyclic(range(elements_or_order))
@@ -323,27 +341,32 @@ def Quat():
 def DisplayG(group):
     return display_group_info(group)
     
-def GroupElements(group, i=None): #returns array (or ith) group element
+def GroupElements(group, i=None): 
     if i is None:
-        return group.elements  # Return the entire list
+        return group.elements  
     else:
         try:
-            return group.elements[i]  # Return the element at index i
+            return group.elements[i]  
         except IndexError:
-            return None  # Return None if index is out of range
+            return None  
     return group.elements
 
 def Order(group): # returns group order
     return len(group.elements)
 
-def Optn(group, a, b): # returns groups operation * s.t. a * b
-    return group.operation(a, b)
+
 
 def Identity(group):# returns identity element
-    return group.identity
+    return find_identity(group)
 
-def Inverse(group, i): # returns array (or ith) of group elements with their corresponding inverses
-    return group.inverses
+def Inverse(group, i=None): # returns array (or ith) of group elements with their corresponding inverses
+    if i is None:
+        return find_inverses(group) 
+    else:
+        try:
+            return find_inverses(group, i)
+        except IndexError:
+            return None  
 
 def Conj_Class(group):
     conj_classes = []
@@ -352,8 +375,8 @@ def Conj_Class(group):
         conj_class = []  
         if g not in used_conj: 
             for h in GroupElements(group):
-                conj = group.Optn(group, group.Optn(h, g), group.Inverse(h))
+                conj = Optn(group, Optn(group, h, g), Inverse(group, h))
                 conj_class.append(conj)
-                used_conj.append(conj) 
+                used_conj.add(conj) 
             conj_classes.append(conj_class)  
     return conj_classes

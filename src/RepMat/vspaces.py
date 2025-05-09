@@ -63,6 +63,9 @@ class create_VSpace:
 
     def __repr__(self):
         return f"VSpace({self.basis_vectors})"
+    
+    def __iter__(self):
+        return iter(self.basis_vectors)
 
 
     # checks for linear independence, vspace axioms and whether it is in the field
